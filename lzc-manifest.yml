@@ -1,0 +1,70 @@
+application:
+  entries:
+    - id: s3
+      title: "S3"
+      path: /
+
+    - id: webui
+      title: "Web UI"
+      path: /
+      prefix_domain: web
+  public_path:
+    - /
+  subdomain: s3
+  upstreams:
+    - location: /
+      domain_prefix: web
+      backend: http://versitygw:7071/
+      remove_this_request_headers:
+        - origin
+        - Referer
+    - location: /
+      backend: http://versitygw:7070/
+      remove_this_request_headers:
+        - origin
+        - Referer
+
+  injects:
+    - id: webui-login-autofill
+      when:
+        - /
+        - /login
+        - /signin
+      do:
+        - src: builtin://simple-inject-password
+          params:
+            user: '{{ index .U "root_access_key" }}'
+            password: '{{ index .U "root_secret_key" }}'
+            autoSubmit: false
+
+services:
+  versitygw:
+    # versity/versitygw:v1.4.0
+    image: registry.lazycat.cloud/czyt/versity/versitygw:a37a89c5bfbdc14c
+    environment:
+      - ROOT_ACCESS_KEY={{  .U.root_access_key }}
+      - ROOT_SECRET_KEY={{ .U.root_secret_key }}
+      - VGW_PORT=:7070
+      - VGW_HEALTH=/healthz
+      - WEBUI_ORIGIN=https://versitygw.${LAZYCAT_BOX_DOMAIN}
+
+    command: --iam-dir /config/iam --webui :7071 --webui-gateways https://s3.${LAZYCAT_BOX_DOMAIN} posix /data --versioning-dir /data-versioning --bucketlinks
+
+    binds:
+      - /lzcapp/var/data:/data
+      - /lzcapp/var/versioning:/data-versioning
+      - /lzcapp/var/iam:/config/iam
+
+    healthcheck:
+      test:
+        - CMD
+        - wget
+        - -qO-
+        - http://127.0.0.1:7070/healthz
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+ext_config:
+  enable_document_access: false

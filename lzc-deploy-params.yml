@@ -1,0 +1,28 @@
+# 部署参数配置
+# VersityGW 使用 ROOT_ACCESS_KEY 和 ROOT_SECRET_KEY 作为 root 用户凭据
+
+params:
+  # Root 用户访问密钥（S3 API 和 WebUI 登录使用）
+  - id: root_access_key
+    type: string
+    name: "Root Access Key"
+    description: "Root user access key for S3 API and WebUI login (similar to AWS_ACCESS_KEY_ID)"
+    default_value: "ak_lazycat"
+    optional: false
+
+  # Root 用户密钥（S3 API 和 WebUI 登录使用）
+  - id: root_secret_key
+    type: secret
+    name: "Root Secret Key"
+    description: "Root user secret key for S3 API and WebUI login (similar to AWS_SECRET_ACCESS_KEY)"
+    default_value: "sk_lazycat"
+    optional: false
+
+locales:
+  zh:
+    root_access_key:
+      name: "Root 访问密钥"
+      description: "Root 用户访问密钥，用于 S3 API 和 WebUI 登录（类似 AWS_ACCESS_KEY_ID）"
+    root_secret_key:
+      name: "Root 密钥"
+      description: "Root 用户密钥，用于 S3 API 和 WebUI 登录（类似 AWS_SECRET_ACCESS_KEY）"

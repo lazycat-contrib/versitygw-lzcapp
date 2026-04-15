@@ -1,0 +1,24 @@
+package: community.lazycat.app.versitygw
+version: 1.4.0
+name: VersityGW
+description: "High-performance S3 Gateway that translates S3 API requests to POSIX filesystem, Azure Blob, or other S3 servers"
+min_os_version: 1.5.0
+author: versity
+license: Apache-2.0
+homepage: https://github.com/versity/versitygw
+
+locales:
+  zh:
+    name: "Versity S3 网关"
+    description: "高性能 S3 网关，将 S3 API 请求转换为 POSIX 文件系统、Azure Blob 或其他 S3 服务器操作"
+    entries.s3.title: "S3 访问端点"
+    entries.webui.title: "Web 后台"
+  en:
+    name: "Versity S3 Gateway"
+    description: "High-performance S3 Gateway that translates S3 API requests to POSIX filesystem, Azure Blob, or other S3 servers"
+    entries.s3.title: "S3 Endpoint"
+    entries.webui.title: "Web Dashboard"
+
+permissions:
+  required:
+    - net.internet
