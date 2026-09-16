@@ -3,7 +3,6 @@ application:
     - id: s3
       title: "S3"
       path: /
-
     - id: webui
       title: "Web UI"
       path: /
@@ -23,7 +22,6 @@ application:
       remove_this_request_headers:
         - origin
         - Referer
-
   injects:
     - id: webui-login-autofill
       when:
@@ -36,25 +34,21 @@ application:
             user: '{{ index .U "root_access_key" }}'
             password: '{{ index .U "root_secret_key" }}'
             autoSubmit: false
-
 services:
   versitygw:
-    # upstream: versity/versitygw:v1.4.0
-    image: docker.1ms.run/versity/versitygw:v1.4.0
+    # upstream: versity/versitygw:v1.8.0
+    image: docker.1ms.run/versity/versitygw:v1.8.0
     environment:
       - ROOT_ACCESS_KEY={{  .U.root_access_key }}
       - ROOT_SECRET_KEY={{ .U.root_secret_key }}
       - VGW_PORT=:7070
       - VGW_HEALTH=/healthz
       - WEBUI_ORIGIN=https://versitygw.${LAZYCAT_BOX_DOMAIN}
-
     command: --iam-dir /config/iam --webui :7071 --webui-gateways https://s3.${LAZYCAT_BOX_DOMAIN} posix /data --versioning-dir /data-versioning --bucketlinks
-
     binds:
       - /lzcapp/var/data:/data
       - /lzcapp/var/versioning:/data-versioning
       - /lzcapp/var/iam:/config/iam
-
     healthcheck:
       test:
         - CMD
@@ -65,6 +59,5 @@ services:
       timeout: 5s
       retries: 5
       start_period: 15s
-
 ext_config:
   enable_document_access: false
