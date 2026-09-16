@@ -1,0 +1,40 @@
+version: 1
+
+project:
+  root: .
+  build_config: lzc-build.yml
+  package_file: package.yml
+  output: .lazycat-build/versitygw.lpk
+  target_arch: amd64
+
+update:
+  strategy: publish
+  allow_downgrade: false
+  version_source:
+    type: image
+    image: versitygw
+
+build:
+  run_buildscript: false
+
+images:
+  # 主应用：上游 Docker Hub versity/versitygw，v1.x 完整三段 SemVer（v1.0.0~v1.8.0），排除 latest 与 v0.x 旧线
+  - id: versitygw
+    target: service
+    service: versitygw
+    source: versity/versitygw
+    channel: stable
+    sort: semver
+    tag_regex: '^v?\d+\.\d+\.\d+$'
+    delivery:
+      mode: mirror
+
+stores:
+  official:
+    # Official store publication is intentionally disabled; publish only to Miaomiao Store.
+    enabled: false
+  private:
+    enabled: true
+    skip_if_version_exists: true
+    name: VersityGW
+    summary: "高性能 S3 网关，将 S3 API 请求转换为 POSIX 文件系统"

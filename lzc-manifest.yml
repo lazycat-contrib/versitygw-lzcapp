@@ -39,8 +39,8 @@ application:
 
 services:
   versitygw:
-    # versity/versitygw:v1.4.0
-    image: registry.lazycat.cloud/czyt/versity/versitygw:a37a89c5bfbdc14c
+    # upstream: versity/versitygw:v1.4.0
+    image: docker.1ms.run/versity/versitygw:v1.4.0
     environment:
       - ROOT_ACCESS_KEY={{  .U.root_access_key }}
       - ROOT_SECRET_KEY={{ .U.root_secret_key }}
