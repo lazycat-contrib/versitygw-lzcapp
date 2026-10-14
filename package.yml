@@ -1,5 +1,5 @@
 package: community.lazycat.app.versitygw
-version: 1.8.0
+version: 1.9.0
 name: VersityGW
 description: "High-performance S3 Gateway that translates S3 API requests to POSIX filesystem, Azure Blob, or other S3 servers"
 min_os_version: 1.5.0

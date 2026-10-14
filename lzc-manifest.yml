@@ -36,8 +36,8 @@ application:
             autoSubmit: false
 services:
   versitygw:
-    # upstream: versity/versitygw:v1.8.0
-    image: docker.1ms.run/versity/versitygw:v1.8.0
+    # upstream: versity/versitygw:v1.9.0
+    image: docker.1ms.run/versity/versitygw:v1.9.0
     environment:
       - ROOT_ACCESS_KEY={{  .U.root_access_key }}
       - ROOT_SECRET_KEY={{ .U.root_secret_key }}
